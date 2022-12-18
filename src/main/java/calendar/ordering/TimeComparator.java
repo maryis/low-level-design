@@ -1,4 +1,4 @@
-package calendar.order;
+package calendar.ordering;
 
 import calendar.model.Event;
 

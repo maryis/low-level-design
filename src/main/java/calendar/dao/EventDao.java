@@ -22,10 +22,6 @@ public class EventDao extends BasicDao {
         return result;
     }
 
-//    public List<TimeSlot> getAvailability(List<Participant> participants, Date day) {
-//
-//    }
-
     public List<Event> getAllByDate(Date date) {
         List<Event> allEvents = getAll();
         List<Event> result = new ArrayList<>();

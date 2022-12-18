@@ -4,7 +4,7 @@ import calendar.dao.EventDao;
 import calendar.exception.NoAvailableTime;
 import calendar.exception.WrongParameters;
 import calendar.model.*;
-import calendar.order.EventComparator;
+import calendar.ordering.EventComparator;
 
 import java.util.ArrayList;
 import java.util.Date;

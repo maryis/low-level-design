@@ -14,33 +14,36 @@ public class KeyValueStore {
     }
 
     public void begin(){
-        //to support nested transaction, I think I need to pass top local storage
         if(!stack.isEmpty())
-            stack.push(new Transaction(stack.peek().localStorage));
+            stack.push(new Transaction(new HashMap<>(stack.peek().localStorage)));
         else
             stack.push(new Transaction(new HashMap<>(globalStorage)));
     }
 
     private void end(){
-        if(!stack.isEmpty())
+        if(!stack.isEmpty()) {
             stack.pop();
+            return;
+        }
+        throw new RuntimeException("No active Transaction");
     }
 
     public void commit(){
         if (!stack.isEmpty()) {
-            Transaction transaction = stack.peek();
-            globalStorage = new HashMap<>(transaction.localStorage);
-            transaction.localStorage.clear();
+            globalStorage = stack.pop().localStorage;
+            return;
         }
-        end();
+        throw new RuntimeException("No active Transaction");
     }
 
     public void rollback() {
         if (!stack.isEmpty()) {
             Transaction transaction = stack.peek();
             transaction.localStorage.clear();
+            end();
+            return;
         }
-        end();
+        throw new RuntimeException("No active Transaction");
     }
 
     public void set(int key, String value) {

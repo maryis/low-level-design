@@ -1,5 +1,6 @@
 package snakegame;
 
+import java.util.Objects;
 import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -12,6 +13,21 @@ public class Game {
     private AtomicBoolean paused;
     private Random random;
     private GameStatus status;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Game game = (Game) o;
+        return snake.equals(game.snake) &&
+                paused.equals(game.paused) &&
+                status == game.status;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(snake, paused, status);
+    }
 
     public Game(int w, int h) {
         this.board = new Board(w, h);
